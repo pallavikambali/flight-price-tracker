@@ -1,0 +1,4 @@
+APScheduler
+pytest
+python-dotenv
+requests
