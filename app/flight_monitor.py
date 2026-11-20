@@ -7,7 +7,10 @@ from app.database import (
 from app.flight_search import search_flights
 from app.flight_data import extract_flight_data
 from app.price_tracker import check_price
-from app.notification_manager import send_notification
+from app.notification_manager import (
+    send_notification,
+    send_telegram_notification
+)
 
 
 def search_flight_prices():
@@ -48,10 +51,11 @@ def search_flight_prices():
         if flight["price"] <= target_price and alert_sent == 0:
 
             email_sent = send_notification(flight, target_price)
+            telegram_sent = send_telegram_notification(flight, target_price)
 
-            if email_sent:
+            if email_sent or telegram_sent:
                 mark_alert_sent(destination_id)
-
+                
         if lowest_price is None or flight["price"] < lowest_price:
             update_lowest_price(destination_id, flight["price"])
             print("New lowest price recorded!")
