@@ -27,7 +27,7 @@ Great news! A flight is within your budget.
 Airline: {flight['airline']}
 Flight: {flight['flight_number']}
 Route: {flight['origin']} to {flight['destination']}
-
+Stops: {flight['stops']}
 Current Price: ₹{flight['price']}
 Your Target: ₹{target_price}
 """)
@@ -58,6 +58,7 @@ def send_telegram_notification(flight, target_price):
         f"Airline: {flight['airline']}\n"
         f"Flight: {flight['flight_number']}\n"
         f"Route: {flight['origin']} → {flight['destination']}\n"
+        f"Stops: {flight['stops']}\n"
         f"Price: ₹{flight['price']}\n"
         f"Target: ₹{target_price}"
     )

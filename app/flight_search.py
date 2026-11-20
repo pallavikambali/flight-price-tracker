@@ -2,8 +2,7 @@ import requests
 from app.config import SERPAPI_KEY
 from app.logger import logger
 
-
-def search_flights(origin, destination, outbound_date):
+def search_flights(origin, destination, outbound_date, stops=None):
     api_url = "https://serpapi.com/search"
 
     params = {
@@ -18,6 +17,9 @@ def search_flights(origin, destination, outbound_date):
         "api_key": SERPAPI_KEY
     }
 
+    if stops is not None:
+        params["stops"] = stops
+
     logger.info("Searching flights: %s → %s", origin, destination)
 
     try:
@@ -27,7 +29,6 @@ def search_flights(origin, destination, outbound_date):
         data = response.json()
 
         logger.info("Flight search completed successfully")
-
         return data
 
     except requests.exceptions.RequestException as error:
